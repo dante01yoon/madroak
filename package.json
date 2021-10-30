@@ -1,0 +1,24 @@
+{
+  "name": "madroak",
+  "version": "1.0.0",
+  "description": "express app",
+  "main": "madroak.js",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node madroak.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dante01yoon/madroak.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dante01yoon/madroak/issues"
+  },
+  "homepage": "https://github.com/dante01yoon/madroak#readme"
+}
