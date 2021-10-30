@@ -15,7 +15,17 @@ app.set("view engine", ".hbs");
 app.get("/", (req, res) => res.render("home"));
 
 app.get("/about*", (req, res) => {
-  res.render("about");
+  const fortunes = [
+    "Conquer your fears or they will conquer you.",
+    "Rivers need springs.",
+    "Do not fear what you don't know.",
+    "You will have a pleasant surprise.",
+    "Whenever possible, keep it simple.",
+  ]
+
+  res.render("about", {
+    fortune: fortunes[~~(Math.random() * fortunes.length)],
+  });
 })
 
 // 404
