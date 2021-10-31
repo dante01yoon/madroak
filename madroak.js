@@ -1,17 +1,26 @@
-const { errorLog, appLog } = require("./util");
+const { appLog } = require("./util");
 const express = require("express");
 const expressHandlebars = require("express-handlebars");
+const weatherMiddleware = require("./lib/middleware/weather");
 const handlers = require("./lib/handlers");
 const app = express();
 const port = process.env.PORT || 3000;
 // 정적 파일 세팅
 app.use(express.static(__dirname + "/public"));
+app.use(express.urlencoded({ extended: false }));
 // 핸들바 뷰 엔진 설정
 app.engine(".hbs", expressHandlebars({
   defaultLayout: "main",
   extname: ".hbs",
 }))
+app.use(weatherMiddleware);
 app.set("view engine", ".hbs");
+// x-powered-by 정보 은닉
+app.disable("x-powered-by");
+app.get("/headers", (req, res) => {
+  console.log({ protocol: req.protocol, url: req.url, hostname: req.hostname })
+  res.type("text/plain");
+})
 
 app.get("/", handlers.home);
 
