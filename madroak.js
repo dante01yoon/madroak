@@ -13,16 +13,20 @@ app.engine(".hbs", expressHandlebars({
 }))
 app.set("view engine", ".hbs");
 
-app.get("/", (req, res) => handlers.home);
+app.get("/", handlers.home);
 
-app.get("/about*", (req, res) => handlers.about)
+app.get("/about*", handlers.about)
 
 // 404
-app.use((req, res) => handlers.notFound)
+app.use(handlers.notFound)
 
 // 500
-app.use((err, req, res, next) => handlers.serverError)
+app.use(handlers.serverError)
 
-app.listen(port, (req) => {
-  appLog(`Express started on port ${port}`)
-})
+if (require.main === module) {
+  app.listen(port, () => {
+    appLog(`Express started on port ${port}`)
+  })
+} else {
+  module.exports = app;
+}

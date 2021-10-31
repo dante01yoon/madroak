@@ -1,0 +1,7 @@
+language: node_js
+node_js:
+  - v14.15.5
+before_script:
+  - npm install
+notifications:
+  slack: seneggi:H053phQIxX2Bp2fFwtBtMGvi
