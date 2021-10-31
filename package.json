@@ -7,10 +7,15 @@
     "express": "^4.17.1",
     "express-handlebars": "^3.1.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "jest": "^25.5.4",
+    "nodemon": "^2.0.14"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node madroak.js"
+    "start": "node madroak.js",
+    "dev": "nodemon madroak.js",
+    "test": "jest --watch"
   },
   "repository": {
     "type": "git",
