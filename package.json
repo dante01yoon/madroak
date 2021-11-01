@@ -4,8 +4,13 @@
   "description": "express app",
   "main": "madroak.js",
   "dependencies": {
+    "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
-    "express-handlebars": "^3.1.0"
+    "express-handlebars": "^3.1.0",
+    "express-session": "^1.17.2",
+    "morgan": "^1.10.0",
+    "multiparty": "^4.2.2",
+    "nodemailer": "^6.7.0"
   },
   "devDependencies": {
     "eslint": "^7.32.0",
