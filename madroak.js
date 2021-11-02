@@ -1,7 +1,8 @@
-const { appLog } = require("./util");
+const { appLog, errorLog } = require("./util");
 const express = require("express");
 const multiparty = require("multiparty");
 const cookieParser = require("cookie-parser");
+const cluster = require("cluster");
 const expressHandlebars = require("express-handlebars");
 const weatherMiddleware = require("./lib/middleware/weather");
 const handlers = require("./lib/handlers");
@@ -25,7 +26,13 @@ switch (app.get("env")) {
     break;
 }
 
-
+// 워커 시동 로그
+app.use((req, res, next) => {
+  if (cluster.isWorker) {
+    appLog(`WOrker ${cluster.worker.id} received request`)
+  }
+  next();
+})
 // 정적 파일 세팅
 app.use(express.static(__dirname + "/public"));
 // body 읽어오기
@@ -83,16 +90,30 @@ app.post("/contest/vacation-photo/:year/:month", (req, res) => {
 
 app.post("/api/vacation-photo-contest", handlers.api.vacationPhotoContest);
 
+// 에러처리
+app.get("/fail", (req, res) => {
+  throw new Error("Nope!");
+})
+
 // 404
 app.use(handlers.notFound)
 
 // 500
 app.use(handlers.serverError)
 
-if (require.main === module) {
+process.on("uncaughtException", err => {
+  errorLog(err)
+  process.exit(1);
+})
+
+function startServer(port) {
   app.listen(port, () => {
     appLog(`Express started on port ${port}`)
-  })
+  });
+}
+
+if (require.main === module) {
+  startServer(process.env.PORT || port)
 } else {
-  module.exports = app;
+  module.exports = startServer;
 }
